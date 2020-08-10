@@ -1,59 +1,38 @@
-// /*global chrome*/
-import React, { useEffect, useState } from 'react';
-import TopSites from './components/TopSites'
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import './styles/App.css';
+import InitPage from './components/InitPage';
+import HomePage from './components/DashboardPage';
+import { Switch, Route, useHistory } from 'react-router-dom';
 
-function App() {
-  const [sites, setSites] = useState([])
+const App = () => {
+  const [user, setUser] = useState('');
+  const history = useHistory();
 
-  // useEffect(() => {
-  //     chrome.topSites.get(sites => setSites(sites.concat(sites)))
-  // }, [])
-
-  const loadTopSites= () => {
-    setSites(sites.concat(topSites))
-  }
-  
-  useEffect(loadTopSites, [])
+  useEffect(() => {
+    const getUser = localStorage.getItem('stateofmind-user-name');
+    if(getUser) {
+      setUser(getUser);
+      history.push('/home');
+      // localStorage.removeItem('stateofmind-user-name');
+    }
+  }, []); // eslint-disable-line
 
   return (
-      <TopSites sites={sites} />
-  )
-}
-
-const topSites = [
-  {
-    title: 'YouTube',
-    url: 'https://www.youtube.com/'
-  },
-  {
-    title: '(2) Facebook',
-    url: 'https://www.facebook.com/'
-  },
-  {
-    title: 'Dashboard',
-    url: 'https://canvas.eee.uci.edu/'
-  },
-  {
-    title: 'All Categories - Twitch',
-    url: 'https://www.twitch.tv/directory'
-  },
-  {
-    title: 'Amazon.com: Online Shopping for Electronics, Apparel, Computers, Books, DVDs & more',
-    url: 'https://www.amazon.com/'
-  },
-  {
-    title: 'GitHub',
-    url: 'https://github.com/'
-  },
-  {
-    title: 'Google',
-    url: 'https://www.google.com/'
-  },
-  {
-    title: 'Firecode.io | Coding Interview Answers and Trainer',
-    url: 'https://www.firecode.io/'
-  }
-]
+    <div className='wrapper'>
+      <Switch>
+        <Route path='/home'>
+          <div className='page'>
+            <HomePage user={user} />
+          </div>
+        </Route>
+        <Route path='/'>
+          <div className='dashboard-page'>
+            <InitPage setUser={setUser} />
+          </div>
+        </Route>
+      </Switch>
+    </div>
+  );
+};
 
 export default App;

@@ -1,0 +1,17 @@
+.wrapper {
+    height: 100vh;
+}
+
+.init-page {
+    max-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dashboard-page {
+    max-height: 100%;
+    display: flex;
+    justify-content: center;
+}
