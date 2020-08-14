@@ -11,6 +11,7 @@ const InitPage = ({ setUser }) => {
     localStorage.setItem('stateofmind-user-name', name);
     setUser(name);
     history.push('/home');
+    // localStorage.removeItem('stateofmind-user-name');
   };
 
   return (
